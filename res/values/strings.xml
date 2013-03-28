@@ -7,6 +7,7 @@
     <string name="train_classic">Classic 501</string>
     
     <string name="tv501">501</string>
+    <string name="tv00">00</string>
     <string name="tv_remaining">remaining</string>
     
     <string name="tb_erase">-</string>

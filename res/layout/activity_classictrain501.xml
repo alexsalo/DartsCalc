@@ -180,7 +180,7 @@
         </TableRow>
     </TableLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/score_layout"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -191,16 +191,51 @@
             android:id="@+id/current_attempt_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_marginLeft="20dp"
             android:padding="30dp"
-            android:text="@string/tb0"
+            android:text="@string/tv00"
             android:textColor="#ffffff"
             android:textSize="40sp" />
-
+        
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:padding="20dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/current_leg1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv00"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/current_leg2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv00"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/current_leg3_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv00"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/current_score_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:paddingTop="20dp"
+            android:paddingLeft="40dp"
             android:orientation="vertical" >
 
             <TextView
@@ -214,8 +249,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_remaining" />
+                android:text="@string/tv_remaining"
+                android:textColor="#bbbbbb" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
