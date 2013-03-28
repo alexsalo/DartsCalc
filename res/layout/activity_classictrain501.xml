@@ -1,161 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:shrinkColumns="*"
-    android:stretchColumns="*" >
+    android:background="#000000" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    <TableLayout
+        android:id="@+id/table_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp" >
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0.5dp"
+        android:layout_marginTop="0.5dp"
+        android:background="#000000"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb1"
-            android:textColor="#ffffff" />
+        <TableRow
+            android:id="@+id/tableRow123"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0.5dp"
+            android:layout_marginRight="0.5dp" >
 
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb2"
-            android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb1"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb3"
-            android:textColor="#ffffff" />
-    </TableRow>
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb2"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
 
-    <TableRow
-        android:id="@+id/tableRow1"
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb3"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow456"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0.5dp"
+            android:layout_marginRight="0.5dp" >
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb4"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv5"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb5"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv6"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb6"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow789"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0.5dp"
+            android:layout_marginRight="0.5dp" >
+
+            <TextView
+                android:id="@+id/tv7"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb7"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv8"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb8"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv9"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb9"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowc0confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0.5dp"
+            android:layout_marginRight="0.5dp" >
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb_confirm"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv0"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb0"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv_erase"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:padding="25dp"
+                android:text="@string/tb_erase"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:id="@+id/score_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp" >
+        android:layout_height="fill_parent"
+        android:layout_above="@id/table_keyboard"
+        android:background="#222222" >
 
         <TextView
-            android:id="@+id/tv1"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb1"
-            android:textColor="#ffffff" />
+            android:id="@+id/current_attempt_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:padding="30dp"
+            android:text="@string/tb0"
+            android:textColor="#ffffff"
+            android:textSize="40sp" />
 
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb2"
-            android:textColor="#ffffff" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb3"
-            android:textColor="#ffffff" />
-    </TableRow>
+            <TextView
+                android:id="@+id/current_score_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv501"
+                android:textColor="#ffffff"
+                android:textSize="50sp" />
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_remaining" />
+        </LinearLayout>
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb1"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb2"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb3"
-            android:textColor="#ffffff" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp" >
-
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb1"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb2"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_margin="0.5dp"
-            android:layout_weight="1"
-            android:background="#aaaaaa"
-            android:gravity="center"
-            android:padding="35dip"
-            android:text="@string/tb3"
-            android:textColor="#ffffff" />
-    </TableRow>
-
-</TableLayout>
+</RelativeLayout>
