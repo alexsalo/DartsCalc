@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
+
+    <RelativeLayout
+        android:id="@+id/score_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
+            android:id="@+id/current_attempt_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:text="@string/tb0"/>
+
+        <TextView
+            android:id="@+id/current_score_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:layout_marginLeft="100sp"
+            android:layout_toRightOf="@id/current_attempt_tv"
+            android:text="@string/tv501" />
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/score_layout"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/tb1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb1" />
+
+            <Button
+                android:id="@+id/tb2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb2" />
+
+            <Button
+                android:id="@+id/tb3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/tb4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb4" />
+
+            <Button
+                android:id="@+id/tb5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb5" />
+
+            <Button
+                android:id="@+id/tb6"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/tb7"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb7" />
+
+            <Button
+                android:id="@+id/tb8"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb8" />
+
+            <Button
+                android:id="@+id/tb9"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb9" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/tbclean"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="clean" />
+
+            <Button
+                android:id="@+id/tb0"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/tb0" />
+
+            <Button
+                android:id="@+id/tberase"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="erase" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
