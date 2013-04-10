@@ -150,10 +150,11 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
+                android:drawableLeft="@android:drawable/ic_menu_add"
                 android:gravity="center"
-                android:padding="25dp"
-                android:text="@string/tb_confirm"
-                android:textColor="#ffffff"
+                android:paddingBottom="25dp"
+                android:paddingLeft="35dp"
+                android:paddingTop="25dp"
                 android:textSize="30sp" />
 
             <TextView
@@ -172,10 +173,11 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
                 android:gravity="center"
-                android:padding="25dp"
-                android:text="@string/tb_erase"
-                android:textColor="#ffffff"
+                android:paddingBottom="25dp"
+                android:paddingLeft="35dp"
+                android:paddingTop="25dp"
                 android:textSize="30sp" />
         </TableRow>
     </TableLayout>
@@ -187,23 +189,37 @@
         android:layout_above="@id/table_keyboard"
         android:background="#222222" >
 
-        <TextView
-            android:id="@+id/current_attempt_tv"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="20dp"
-            android:padding="30dp"
-            android:text="@string/tv00"
-            android:textColor="#ffffff"
-            android:textSize="40sp" />
-        
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="30dp"
+            	android:paddingTop="20dp" 
+                android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/current_attempt_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv00"
+                android:textColor="#ffffff"
+                android:textSize="50sp" />
+            <TextView 
+                android:id="@+id/current_leg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_leg"
+                android:textColor="#bbbbbb"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:padding="20dp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="20dp" >
 
             <TextView
                 android:id="@+id/current_leg1_tv"
@@ -220,6 +236,7 @@
                 android:text="@string/tv00"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/current_leg3_tv"
                 android:layout_width="wrap_content"
@@ -234,9 +251,9 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="right"
-            android:paddingTop="20dp"
+            android:orientation="vertical"
             android:paddingLeft="40dp"
-            android:orientation="vertical" >
+            android:paddingTop="20dp" >
 
             <TextView
                 android:id="@+id/current_score_tv"

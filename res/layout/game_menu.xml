@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <item
+        android:id="@+id/menu_rule"
+        android:icon="@android:drawable/ic_menu_help"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_rule"/>
+
+    <item
+        android:id="@+id/menu_save_to_disk"
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_rule"/>
+
+    <item
+        android:id="@+id/menu_newgame"
+        android:icon="@android:drawable/ic_media_next"
+        android:title="@string/menu_newgame"/>
+
+    <item
+        android:id="@+id/hand_mode"
+        android:background="#222222"
+        android:title="@string/menu_hand_mode">
+
+        <!-- hand mode submenu -->
+
+        <menu>
+
+            <group android:checkableBehavior="single" >
+
+                <item
+                    android:id="@+id/menu_left_hand"
+                    android:title="@string/menu_left_hand"
+                    />
+
+                <item
+                    android:id="@+id/menu_right_hand"
+                    android:title="@string/menu_right_hand"
+                    android:checked = "true"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

@@ -26,6 +26,9 @@
         <activity 
             android:name=".activities.ClassicTrain501Activity"
         ></activity>
+        <activity 
+            android:name=".activities.BigRoundActivity"
+        ></activity>
     </application>
     
 
