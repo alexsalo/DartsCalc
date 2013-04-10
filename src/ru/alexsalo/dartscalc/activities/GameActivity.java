@@ -22,6 +22,7 @@ public abstract class GameActivity extends Activity {
 	protected TextView current_leg3;
 	protected TextView tv_confirm;
 	protected TextView tv_currentLeg;
+	protected TextView[] tv_numbers_mas;
 	protected CharSequence dummy_zero = "00";
 	protected byte leg;
 	protected int legnum;
@@ -92,46 +93,22 @@ public abstract class GameActivity extends Activity {
 				return false;
 			}
 		};
-
-		TextView tv1 = (TextView) findViewById(R.id.tv1);
-		tv1.setTag(1);
-		tv1.setOnTouchListener(number_listner);
-
-		TextView tv2 = (TextView) findViewById(R.id.tv2);
-		tv2.setTag(2);
-		tv2.setOnTouchListener(number_listner);
-
-		TextView tv3 = (TextView) findViewById(R.id.tv3);
-		tv3.setTag(3);
-		tv3.setOnTouchListener(number_listner);
-
-		TextView tv4 = (TextView) findViewById(R.id.tv4);
-		tv4.setTag(4);
-		tv4.setOnTouchListener(number_listner);
-
-		TextView tv5 = (TextView) findViewById(R.id.tv5);
-		tv5.setTag(5);
-		tv5.setOnTouchListener(number_listner);
-
-		TextView tv6 = (TextView) findViewById(R.id.tv6);
-		tv6.setTag(6);
-		tv6.setOnTouchListener(number_listner);
-
-		TextView tv7 = (TextView) findViewById(R.id.tv7);
-		tv7.setTag(7);
-		tv7.setOnTouchListener(number_listner);
-
-		TextView tv8 = (TextView) findViewById(R.id.tv8);
-		tv8.setTag(8);
-		tv8.setOnTouchListener(number_listner);
-
-		TextView tv9 = (TextView) findViewById(R.id.tv9);
-		tv9.setTag(9);
-		tv9.setOnTouchListener(number_listner);
-
-		TextView tv0 = (TextView) findViewById(R.id.tv0);
-		tv0.setTag(0);
-		tv0.setOnTouchListener(number_listner);
+		tv_numbers_mas = new TextView[10];
+		tv_numbers_mas[0] = (TextView) findViewById(R.id.tv0);
+		tv_numbers_mas[1] = (TextView) findViewById(R.id.tv1);
+		tv_numbers_mas[2] = (TextView) findViewById(R.id.tv2);
+		tv_numbers_mas[3] = (TextView) findViewById(R.id.tv3);
+		tv_numbers_mas[4] = (TextView) findViewById(R.id.tv4);
+		tv_numbers_mas[5] = (TextView) findViewById(R.id.tv5);
+		tv_numbers_mas[6] = (TextView) findViewById(R.id.tv6);
+		tv_numbers_mas[7] = (TextView) findViewById(R.id.tv7);
+		tv_numbers_mas[8] = (TextView) findViewById(R.id.tv8);
+		tv_numbers_mas[9] = (TextView) findViewById(R.id.tv9);
+		
+		for (int i=0; i<=9; i++){
+			tv_numbers_mas[i].setTag(i);
+			tv_numbers_mas[i].setOnTouchListener(number_listner);
+		}
 
 		TextView tv_erase = (TextView) findViewById(R.id.tv_erase);
 		tv_erase.setOnTouchListener(new OnTouchListener() {
@@ -148,56 +125,13 @@ public abstract class GameActivity extends Activity {
 		tv_confirm = (TextView) findViewById(R.id.tv_confirm);
 		setConfirmTouchListner();
 	}
-
+	abstract void setConfirmTouchListner();
 	abstract void initNewGame();
 
 	protected void initLegViews() {
 		current_leg1.setText(dummy_zero);
 		current_leg2.setText(dummy_zero);
 		current_leg3.setText(dummy_zero);
-	}
-
-	protected void setConfirmTouchListner() {
-		tv_confirm.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				cur_score = Integer.parseInt(current_attempt.getText()
-						.toString());
-				if (cur_score <= 60) {
-					ShowLegViewScores();
-					if (leg == 4) { // 3 leg's attempts ready
-						legnum++;
-						tv_currentLeg.setText(getApplicationContext().getString(R.string.current_leg)
-								+ String.valueOf(legnum));
-						sum = score_leg1 + score_leg2 + score_leg3;
-						if (score_game - sum < 0) { // overdraft
-							Toast.makeText(getApplicationContext(),
-									"Overdraft, try again", Toast.LENGTH_SHORT)
-									.show();
-							initLegViews();
-							leg = 1;
-						} else {
-							if (!(score_game == 0)) { // no win yet
-								score_game -= sum;
-								writeLegResults();
-								current_score_game.setText(String
-										.valueOf(score_game));
-							} else { // win
-								Toast.makeText(
-										getApplicationContext(),
-										"Win using " + String.valueOf(legnum)
-												+ " legs!", Toast.LENGTH_SHORT)
-										.show();
-								score_game -= sum;
-								writeLegResults();
-								initNewGame();
-							}
-						}
-					}
-					current_attempt.setText(dummy_zero);
-				}
-				return false;
-			}
-		});
 	}
 
 	protected void ShowLegViewScores() {
