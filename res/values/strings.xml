@@ -10,6 +10,7 @@
     <string name="tv00">00</string>
     <string name="current_leg">Лег "№ </string>
     <string name="tv_remaining">remaining</string>
+
     <string name="tb_erase">-</string>
     <string name="tb_confirm">O</string>
     <string name="menu_rule">Правила игры</string>

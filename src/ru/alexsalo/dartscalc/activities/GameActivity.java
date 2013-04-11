@@ -2,8 +2,12 @@ package ru.alexsalo.dartscalc.activities;
 
 import java.util.ArrayList;
 import ru.alexsalo.dartscalc.R;
+import ru.alexsalo.dartscalc.logic.Achievements;
+import ru.alexsalo.dartscalc.logic.GameModes;
+import ru.alexsalo.dartscalc.logic.SimpleMath;
 import ru.alexsalo.dartscalc.logic.xmlDataBuilder;
 import android.app.*;
+import android.content.Context;
 import android.os.*;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +36,12 @@ public abstract class GameActivity extends Activity {
 	protected int score_game;
 	protected int cur_score;
 	protected int sum;
-	protected String gameMode;
-	private ArrayList<int[]> score_data = new ArrayList<int[]>();
+	protected GameModes gameMode;
+	protected ArrayList<int[]> score_data = new ArrayList<int[]>();
+	protected View.OnTouchListener number_listner;
+	protected Context context;
+	protected Achievements achievement;
+	protected SimpleMath math;
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
@@ -71,6 +79,8 @@ public abstract class GameActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_classictrain501);
+		achievement = new Achievements();
+		math = new SimpleMath();
 
 		current_attempt = (TextView) findViewById(R.id.current_attempt_tv);
 		current_score_game = (TextView) findViewById(R.id.current_score_tv);
@@ -79,9 +89,7 @@ public abstract class GameActivity extends Activity {
 		current_leg3 = (TextView) findViewById(R.id.current_leg3_tv);
 		tv_currentLeg = (TextView) findViewById(R.id.current_leg);
 
-		initNewGame();
-
-		View.OnTouchListener number_listner = new OnTouchListener() {
+		number_listner = new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				CharSequence text = current_attempt.getText();
 				int n = (Integer) v.getTag();
@@ -93,6 +101,7 @@ public abstract class GameActivity extends Activity {
 				return false;
 			}
 		};
+		
 		tv_numbers_mas = new TextView[10];
 		tv_numbers_mas[0] = (TextView) findViewById(R.id.tv0);
 		tv_numbers_mas[1] = (TextView) findViewById(R.id.tv1);
@@ -104,11 +113,6 @@ public abstract class GameActivity extends Activity {
 		tv_numbers_mas[7] = (TextView) findViewById(R.id.tv7);
 		tv_numbers_mas[8] = (TextView) findViewById(R.id.tv8);
 		tv_numbers_mas[9] = (TextView) findViewById(R.id.tv9);
-		
-		for (int i=0; i<=9; i++){
-			tv_numbers_mas[i].setTag(i);
-			tv_numbers_mas[i].setOnTouchListener(number_listner);
-		}
 
 		TextView tv_erase = (TextView) findViewById(R.id.tv_erase);
 		tv_erase.setOnTouchListener(new OnTouchListener() {
@@ -124,6 +128,8 @@ public abstract class GameActivity extends Activity {
 
 		tv_confirm = (TextView) findViewById(R.id.tv_confirm);
 		setConfirmTouchListner();
+		
+		initNewGame();
 	}
 	abstract void setConfirmTouchListner();
 	abstract void initNewGame();
@@ -167,4 +173,19 @@ public abstract class GameActivity extends Activity {
 	}
 
 	abstract void showRule();
+	protected void setNumberListner(){
+		for (int i=0; i<=9; i++){
+			tv_numbers_mas[i].setTag(i);
+			tv_numbers_mas[i].setOnTouchListener(number_listner);
+		}
+	}
+	protected void setDummyNumberListner(){
+		for (int i=0; i<=9; i++){
+			tv_numbers_mas[i].setOnTouchListener(new OnTouchListener() {
+				public boolean onTouch(View v, MotionEvent event) {
+					return false;
+				}
+			});
+		}
+	}
 }

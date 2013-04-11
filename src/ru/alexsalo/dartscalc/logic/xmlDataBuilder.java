@@ -14,10 +14,10 @@ public class xmlDataBuilder {
 	FileWriter writer;
 	File DartsCalcData;
 	File filecsv;
-	String game_mode;
+	GameModes game_mode;
 	Time time = new Time();
 
-	public xmlDataBuilder(String gameMode) {
+	public xmlDataBuilder(GameModes gameMode) {
 		game_mode = gameMode;
 	}
 
@@ -38,7 +38,7 @@ public class xmlDataBuilder {
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
 			DartsCalcData = new File(baseDir + File.separator + "DartsCalcData"
-					+ File.separator + game_mode);
+					+ File.separator + game_mode.getGameMode());
 			if (!DartsCalcData.exists())
 				DartsCalcData.mkdirs();
 			filecsv = new File(DartsCalcData.getAbsoluteFile(), filename);
