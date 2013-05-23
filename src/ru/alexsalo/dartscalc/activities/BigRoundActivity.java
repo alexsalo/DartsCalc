@@ -1,7 +1,6 @@
 package ru.alexsalo.dartscalc.activities;
 
 import ru.alexsalo.dartscalc.R;
-import ru.alexsalo.dartscalc.logic.Achievements;
 import ru.alexsalo.dartscalc.logic.GameModes;
 import android.app.AlertDialog;
 import android.view.Menu;

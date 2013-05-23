@@ -1,14 +1,24 @@
 package ru.alexsalo.dartscalc.activities;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.dropbox.sync.android.DbxAccountManager;
+import com.dropbox.sync.android.DbxFile;
+import com.dropbox.sync.android.DbxFileSystem;
+import com.dropbox.sync.android.DbxPath;
+
 import ru.alexsalo.dartscalc.R;
 import ru.alexsalo.dartscalc.logic.Achievements;
 import ru.alexsalo.dartscalc.logic.GameModes;
 import ru.alexsalo.dartscalc.logic.SimpleMath;
 import ru.alexsalo.dartscalc.logic.xmlDataBuilder;
-import android.app.*;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.os.*;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -42,6 +52,11 @@ public abstract class GameActivity extends Activity {
 	protected Context context;
 	protected Achievements achievement;
 	protected SimpleMath math;
+	protected DbxAccountManager mDbxAcctMgr;
+
+	final public String APP_KEY = "ackpz991o5f69y9";
+	final public String APP_SECRET = "74mzwfyknxvwf3g";
+	static final int REQUEST_LINK_TO_DBX = 0; // This value is up to you
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
@@ -70,6 +85,8 @@ public abstract class GameActivity extends Activity {
 			xmlDataBuilder xmlsaver = new xmlDataBuilder(gameMode);
 			Toast.makeText(getApplicationContext(),
 					xmlsaver.saveToXml(score_data), Toast.LENGTH_LONG).show();
+		case R.id.dropbox_link:
+			onClickLinkToDropBox();
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -81,6 +98,9 @@ public abstract class GameActivity extends Activity {
 		setContentView(R.layout.activity_classictrain501);
 		achievement = new Achievements();
 		math = new SimpleMath();
+
+		mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(),
+				APP_KEY, APP_SECRET);
 
 		current_attempt = (TextView) findViewById(R.id.current_attempt_tv);
 		current_score_game = (TextView) findViewById(R.id.current_score_tv);
@@ -101,7 +121,7 @@ public abstract class GameActivity extends Activity {
 				return false;
 			}
 		};
-		
+
 		tv_numbers_mas = new TextView[10];
 		tv_numbers_mas[0] = (TextView) findViewById(R.id.tv0);
 		tv_numbers_mas[1] = (TextView) findViewById(R.id.tv1);
@@ -128,10 +148,67 @@ public abstract class GameActivity extends Activity {
 
 		tv_confirm = (TextView) findViewById(R.id.tv_confirm);
 		setConfirmTouchListner();
-		
+
 		initNewGame();
 	}
+
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch (which) {
+			case DialogInterface.BUTTON_POSITIVE:
+				mDbxAcctMgr.unlink();
+				break;
+
+			case DialogInterface.BUTTON_NEGATIVE:
+				// No button clicked
+				break;
+			}
+		}
+	};
+
+	public void onClickLinkToDropBox() {
+		if (!mDbxAcctMgr.hasLinkedAccount())
+			mDbxAcctMgr.startLink((Activity) this, REQUEST_LINK_TO_DBX);
+		else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("You already have linked account, do you want yo unlink?")
+					.setPositiveButton("Yes", dialogClickListener)
+					.setNegativeButton("No", dialogClickListener).show();
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_LINK_TO_DBX) {
+			if (resultCode == Activity.RESULT_OK) {
+				doDropboxTest();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"Link to Dropbox failed or was cancelled.",
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	protected void doDropboxTest() {
+		DbxFile testFile;
+		try {
+			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr
+					.getLinkedAccount());
+			testFile = dbxFs.create(new DbxPath("hello.txt"));
+
+			testFile.writeString("hello");
+			testFile.close();
+		} catch (IOException e) {
+		}
+		;
+	}
+
 	abstract void setConfirmTouchListner();
+
 	abstract void initNewGame();
 
 	protected void initLegViews() {
@@ -173,14 +250,16 @@ public abstract class GameActivity extends Activity {
 	}
 
 	abstract void showRule();
-	protected void setNumberListner(){
-		for (int i=0; i<=9; i++){
+
+	protected void setNumberListner() {
+		for (int i = 0; i <= 9; i++) {
 			tv_numbers_mas[i].setTag(i);
 			tv_numbers_mas[i].setOnTouchListener(number_listner);
 		}
 	}
-	protected void setDummyNumberListner(){
-		for (int i=0; i<=9; i++){
+
+	protected void setDummyNumberListner() {
+		for (int i = 0; i <= 9; i++) {
 			tv_numbers_mas[i].setOnTouchListener(new OnTouchListener() {
 				public boolean onTouch(View v, MotionEvent event) {
 					return false;
@@ -188,4 +267,5 @@ public abstract class GameActivity extends Activity {
 			});
 		}
 	}
+
 }

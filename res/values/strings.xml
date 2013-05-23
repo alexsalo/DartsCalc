@@ -19,6 +19,7 @@
     <string name="menu_hand_mode">Выбор руки</string>
     <string name="menu_left_hand">Слабая</string>
     <string name="menu_right_hand">Ведущая</string>
+    <string name="menu_dropbox_link">Указать Dropbox аккаунт</string>
     <string name="tb0">0</string>
     <string name="tb1">1</string>
     <string name="tb2">2</string>
