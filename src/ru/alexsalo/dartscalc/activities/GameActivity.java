@@ -1,13 +1,15 @@
 package ru.alexsalo.dartscalc.activities;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.dropbox.sync.android.DbxAccountManager;
+import com.dropbox.sync.android.DbxException;
 import com.dropbox.sync.android.DbxFile;
 import com.dropbox.sync.android.DbxFileSystem;
+import com.dropbox.sync.android.DbxFileSystem.PathListener;
 import com.dropbox.sync.android.DbxPath;
-
 import ru.alexsalo.dartscalc.R;
 import ru.alexsalo.dartscalc.logic.Achievements;
 import ru.alexsalo.dartscalc.logic.GameModes;
@@ -53,6 +55,7 @@ public abstract class GameActivity extends Activity {
 	protected Achievements achievement;
 	protected SimpleMath math;
 	protected DbxAccountManager mDbxAcctMgr;
+	protected String syncDir;
 
 	final public String APP_KEY = "ackpz991o5f69y9";
 	final public String APP_SECRET = "74mzwfyknxvwf3g";
@@ -83,10 +86,14 @@ public abstract class GameActivity extends Activity {
 			return true;
 		case R.id.menu_save_to_disk:
 			xmlDataBuilder xmlsaver = new xmlDataBuilder(gameMode);
-			Toast.makeText(getApplicationContext(),
-					xmlsaver.saveToXml(score_data), Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Data has been saved",
+					Toast.LENGTH_LONG).show();
+			File file = xmlsaver.saveToXml(score_data);
+			saveResultToDb(file, xmlsaver.getLocalResultPath());
+			return true;
 		case R.id.dropbox_link:
 			onClickLinkToDropBox();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -167,12 +174,25 @@ public abstract class GameActivity extends Activity {
 		}
 	};
 
+	DbxFileSystem.PathListener mDbxPathListner = new PathListener() {
+		@Override
+		public void onPathChange(DbxFileSystem fs, DbxPath arg1, Mode arg2) {
+			try {
+				fs.syncNowAndWait();
+			} catch (DbxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	};
+
 	public void onClickLinkToDropBox() {
 		if (!mDbxAcctMgr.hasLinkedAccount())
 			mDbxAcctMgr.startLink((Activity) this, REQUEST_LINK_TO_DBX);
 		else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("You already have linked account, do you want yo unlink?")
+			builder.setMessage(
+					"You already have linked account, do you want yo unlink?")
 					.setPositiveButton("Yes", dialogClickListener)
 					.setNegativeButton("No", dialogClickListener).show();
 		}
@@ -182,7 +202,9 @@ public abstract class GameActivity extends Activity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_LINK_TO_DBX) {
 			if (resultCode == Activity.RESULT_OK) {
-				doDropboxTest();
+				Toast.makeText(getApplicationContext(),
+						"You was successfulyy connected with Dropbox account",
+						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(getApplicationContext(),
 						"Link to Dropbox failed or was cancelled.",
@@ -193,15 +215,18 @@ public abstract class GameActivity extends Activity {
 		}
 	}
 
-	protected void doDropboxTest() {
-		DbxFile testFile;
+	protected void saveResultToDb(File f, String path) {
+		syncDir = android.os.Build.MODEL + "_" + android.os.Build.MANUFACTURER
+				+ "_" + android.os.Build.SERIAL + "_" + File.separator + path;
+		DbxFile dfile;
 		try {
 			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr
 					.getLinkedAccount());
-			testFile = dbxFs.create(new DbxPath("hello.txt"));
-
-			testFile.writeString("hello");
-			testFile.close();
+			dbxFs.createFolder(new DbxPath(syncDir));
+			dfile = dbxFs.create(new DbxPath(syncDir + File.separator
+					+ f.getName()));
+			dfile.writeFromExistingFile(f, false);
+			dfile.close();
 		} catch (IOException e) {
 		}
 		;
