@@ -12,6 +12,8 @@ import com.dropbox.sync.android.DbxFileSystem.PathListener;
 import com.dropbox.sync.android.DbxPath;
 
 import ru.alexsalo.dartscalc.R;
+import ru.alexsalo.dartscalc.listners.EraseListener;
+import ru.alexsalo.dartscalc.listners.NumberListner;
 import ru.alexsalo.dartscalc.logic.Achievements;
 import ru.alexsalo.dartscalc.logic.GameModes;
 import ru.alexsalo.dartscalc.logic.SimpleMath;
@@ -56,7 +58,8 @@ public abstract class GameActivity extends Activity {
 	protected int sum;
 	protected GameModes gameMode;
 	protected ArrayList<int[]> score_data = new ArrayList<int[]>();
-	protected View.OnTouchListener number_listner;
+	//protected View.OnTouchListener number_listner;
+	protected NumberListner number_listner;
 	protected Context context;
 	protected Achievements achievement;
 	protected SimpleMath math;
@@ -134,19 +137,7 @@ public abstract class GameActivity extends Activity {
 		tv_currentLeg = (TextView) findViewById(R.id.current_leg);
 		tv_rem_score = (TextView) findViewById(R.id.tv_remaining);
 
-		number_listner = new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				CharSequence text = current_attempt.getText();
-				int n = (Integer) v.getTag();
-				if (text.equals(dummy_zero))
-					current_attempt.setText("0" + String.valueOf(n));
-				else if (Integer.parseInt(text.toString()) * 10 + n <= 60)
-					current_attempt.setText(current_attempt.getText().charAt(1)
-							+ String.valueOf(n));
-				return false;
-			}
-		};
+		number_listner = new NumberListner(current_attempt, dummy_zero);
 
 		tv_numbers_mas = new TextView[10];
 		tv_numbers_mas[0] = (TextView) findViewById(R.id.tv0);
@@ -161,17 +152,7 @@ public abstract class GameActivity extends Activity {
 		tv_numbers_mas[9] = (TextView) findViewById(R.id.tv9);
 
 		ImageView tv_erase = (ImageView) findViewById(R.id.tv_erase);
-		tv_erase.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				CharSequence text = current_attempt.getText();
-				if (text.length() > 1)
-					current_attempt.setText("0" + text.charAt(0));
-				else
-					current_attempt.setText(dummy_zero);
-				return false;
-			}
-		});
+		tv_erase.setOnTouchListener(new EraseListener(current_attempt, dummy_zero));
 
 		tv_confirm = (ImageView) findViewById(R.id.tv_confirm);
 		setConfirmTouchListner();

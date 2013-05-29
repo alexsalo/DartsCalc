@@ -7,6 +7,7 @@
     <string name="tv501">501</string>
     <string name="tv00">00</string>
     <string name="current_leg">Подход "№ </string>
+    <string name="current_dart">Дарт "№ </string>
     <string name="tv_remaining">Осталось</string>
     <string name="tv_sumscores">Очки</string>
     
