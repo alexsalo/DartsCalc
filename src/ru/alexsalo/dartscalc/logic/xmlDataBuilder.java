@@ -32,7 +32,8 @@ public class xmlDataBuilder {
 					+ String.valueOf(mas.get(i)[3]) + ","
 					+ String.valueOf(mas.get(i)[4]) + ","
 					+ String.valueOf(mas.get(i)[5]) + ","
-					+ String.valueOf(mas.get(i)[6]) + "\r\n");
+					+ String.valueOf(mas.get(i)[6]) + ","
+					+ String.valueOf(mas.get(i)[7]) + "\r\n");
 		time.setToNow();
 		String filename = "training_" + time.format("%Y%m%d_%H%M%S") + ".csv";
 		String baseDir = Environment.getExternalStorageDirectory()

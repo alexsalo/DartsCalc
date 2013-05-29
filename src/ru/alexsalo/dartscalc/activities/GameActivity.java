@@ -10,35 +10,41 @@ import com.dropbox.sync.android.DbxFile;
 import com.dropbox.sync.android.DbxFileSystem;
 import com.dropbox.sync.android.DbxFileSystem.PathListener;
 import com.dropbox.sync.android.DbxPath;
+
 import ru.alexsalo.dartscalc.R;
 import ru.alexsalo.dartscalc.logic.Achievements;
 import ru.alexsalo.dartscalc.logic.GameModes;
 import ru.alexsalo.dartscalc.logic.SimpleMath;
 import ru.alexsalo.dartscalc.logic.xmlDataBuilder;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public abstract class GameActivity extends Activity {
 	protected boolean hand = true; // true - right, false - left hand
+	protected boolean sex = true; // true - male, false - female
 	protected TextView current_attempt;
 	protected TextView current_score_game;
 	protected TextView current_leg1;
 	protected TextView current_leg2;
 	protected TextView current_leg3;
-	protected TextView tv_confirm;
+	protected ImageView tv_confirm;
 	protected TextView tv_currentLeg;
 	protected TextView[] tv_numbers_mas;
+	protected TextView tv_rem_score;
 	protected CharSequence dummy_zero = "00";
 	protected byte leg;
 	protected int legnum;
@@ -61,6 +67,7 @@ public abstract class GameActivity extends Activity {
 	final public String APP_SECRET = "74mzwfyknxvwf3g";
 	static final int REQUEST_LINK_TO_DBX = 0; // This value is up to you
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
 	}
@@ -83,6 +90,16 @@ public abstract class GameActivity extends Activity {
 			if (!item.isChecked())
 				item.setChecked(true);
 			hand = true;
+			return true;
+		case R.id.menu_sex_female:
+			if (!item.isChecked())
+				item.setChecked(true);
+			sex = false;
+			return true;
+		case R.id.menu_sex_male:
+			if (!item.isChecked())
+				item.setChecked(true);
+			sex = true;
 			return true;
 		case R.id.menu_save_to_disk:
 			xmlDataBuilder xmlsaver = new xmlDataBuilder(gameMode);
@@ -115,8 +132,10 @@ public abstract class GameActivity extends Activity {
 		current_leg2 = (TextView) findViewById(R.id.current_leg2_tv);
 		current_leg3 = (TextView) findViewById(R.id.current_leg3_tv);
 		tv_currentLeg = (TextView) findViewById(R.id.current_leg);
+		tv_rem_score = (TextView) findViewById(R.id.tv_remaining);
 
 		number_listner = new OnTouchListener() {
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				CharSequence text = current_attempt.getText();
 				int n = (Integer) v.getTag();
@@ -141,8 +160,9 @@ public abstract class GameActivity extends Activity {
 		tv_numbers_mas[8] = (TextView) findViewById(R.id.tv8);
 		tv_numbers_mas[9] = (TextView) findViewById(R.id.tv9);
 
-		TextView tv_erase = (TextView) findViewById(R.id.tv_erase);
+		ImageView tv_erase = (ImageView) findViewById(R.id.tv_erase);
 		tv_erase.setOnTouchListener(new OnTouchListener() {
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				CharSequence text = current_attempt.getText();
 				if (text.length() > 1)
@@ -153,7 +173,7 @@ public abstract class GameActivity extends Activity {
 			}
 		});
 
-		tv_confirm = (TextView) findViewById(R.id.tv_confirm);
+		tv_confirm = (ImageView) findViewById(R.id.tv_confirm);
 		setConfirmTouchListner();
 
 		initNewGame();
@@ -188,7 +208,7 @@ public abstract class GameActivity extends Activity {
 
 	public void onClickLinkToDropBox() {
 		if (!mDbxAcctMgr.hasLinkedAccount())
-			mDbxAcctMgr.startLink((Activity) this, REQUEST_LINK_TO_DBX);
+			mDbxAcctMgr.startLink(this, REQUEST_LINK_TO_DBX);
 		else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(
@@ -215,21 +235,24 @@ public abstract class GameActivity extends Activity {
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	protected void saveResultToDb(File f, String path) {
-		syncDir = android.os.Build.MODEL + "_" + android.os.Build.MANUFACTURER
-				+ "_" + android.os.Build.SERIAL + "_" + File.separator + path;
-		DbxFile dfile;
-		try {
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr
-					.getLinkedAccount());
-			dbxFs.createFolder(new DbxPath(syncDir));
-			dfile = dbxFs.create(new DbxPath(syncDir + File.separator
-					+ f.getName()));
-			dfile.writeFromExistingFile(f, false);
-			dfile.close();
-		} catch (IOException e) {
+		if (mDbxAcctMgr.hasLinkedAccount()) {
+			syncDir = android.os.Build.MODEL + "_"
+					+ android.os.Build.MANUFACTURER + "_"
+					+ android.os.Build.SERIAL + "_" + File.separator + path;
+			DbxFile dfile;
+			try {
+				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr
+						.getLinkedAccount());
+				dbxFs.createFolder(new DbxPath(syncDir));
+				dfile = dbxFs.create(new DbxPath(syncDir + File.separator
+						+ f.getName()));
+				dfile.writeFromExistingFile(f, false);
+				dfile.close();
+			} catch (IOException e) {
+			};
 		}
-		;
 	}
 
 	abstract void setConfirmTouchListner();
@@ -261,7 +284,7 @@ public abstract class GameActivity extends Activity {
 	}
 
 	protected void writeLegResults() {
-		int[] mas = new int[7];
+		int[] mas = new int[8];
 		mas[0] = score_leg1;
 		mas[1] = score_leg2;
 		mas[2] = score_leg3;
@@ -269,6 +292,7 @@ public abstract class GameActivity extends Activity {
 		mas[4] = score_game;
 		mas[5] = legnum;
 		mas[6] = hand ? 1 : 0;
+		mas[7] = sex ? 1 : 0;
 		score_data.add(mas);
 		leg = 1;
 		initLegViews();
@@ -286,6 +310,7 @@ public abstract class GameActivity extends Activity {
 	protected void setDummyNumberListner() {
 		for (int i = 0; i <= 9; i++) {
 			tv_numbers_mas[i].setOnTouchListener(new OnTouchListener() {
+				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					return false;
 				}

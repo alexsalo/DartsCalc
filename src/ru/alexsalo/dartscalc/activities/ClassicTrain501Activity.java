@@ -14,8 +14,10 @@ public class ClassicTrain501Activity extends GameActivity {
 	protected int game_init_score = 501;
 	private GameModes gamemode = GameModes.CLASSIC_501;
 	
+	@Override
 	protected void setConfirmTouchListner() {
 		tv_confirm.setOnTouchListener(new OnTouchListener() {
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				cur_score = Integer.parseInt(current_attempt.getText()
 						.toString());
@@ -58,6 +60,7 @@ public class ClassicTrain501Activity extends GameActivity {
 		});
 	}
 	
+	@Override
 	@SuppressWarnings("unused")
 	protected void showRule(){
 		AlertDialog dialog = new AlertDialog.Builder(this)
@@ -65,6 +68,7 @@ public class ClassicTrain501Activity extends GameActivity {
 		.setMessage(R.string.rule_501)
 		.show();
 	}
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		gameMode = gamemode;
 		MenuInflater inflater = getMenuInflater();
@@ -72,6 +76,7 @@ public class ClassicTrain501Activity extends GameActivity {
 		return true;
 	}
 	
+	@Override
 	protected void initNewGame(){
 		score_data.clear();
 		setNumberListner();

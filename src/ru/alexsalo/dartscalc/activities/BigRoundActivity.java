@@ -14,26 +14,28 @@ public class BigRoundActivity extends GameActivity {
 	protected int game_init_score = 0;
 	private GameModes gamemode = GameModes.BIG_ROUND;
 
+	@Override
 	protected void setConfirmTouchListner() {
 		tv_confirm.setOnTouchListener(new OnTouchListener() {
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				cur_score = Integer.parseInt(current_attempt.getText()
 						.toString());
 				if (legnum <= 20)
-					if (cur_score % legnum == 0 && cur_score <= legnum * 3) {
+					if ((cur_score % legnum == 0 && cur_score <= legnum * 3) || cur_score == 0 ) {
 						ShowLegViewScores();
 						if (leg == 4)// 3 leg's attempts ready
 							legOver();
 					}
 				if (legnum == 21) //bull
-					if (cur_score == 25 || cur_score == 50){						
+					if (cur_score == 25 || cur_score == 50 || cur_score == 0){						
 						ShowLegViewScores();
 						if (leg == 4){
 							legOver();							
 							setDummyNumberListner(); //end of game, hold screen
-							String s = achievement.getAchievement(true, gamemode, score_game);
+							String s = achievement.getAchievement(sex, gamemode, score_game);
 							Toast.makeText(context, "Вы выполнили норматив на: "+ s, 
-									Toast.LENGTH_SHORT).show();
+									Toast.LENGTH_LONG).show();
 						}
 					}
 
@@ -53,7 +55,9 @@ public class BigRoundActivity extends GameActivity {
 		current_score_game.setText(String.valueOf(score_game));
 	}
 
+	@Override
 	protected void initNewGame() {
+		tv_rem_score.setText(getApplicationContext().getString(R.string.tv_sumscores));
 		score_data.clear();
 		setNumberListner();
 		score_game = 0;
@@ -61,12 +65,13 @@ public class BigRoundActivity extends GameActivity {
 		current_score_game.setText(String.valueOf(game_init_score));
 		initLegViews();
 		leg = 1;
-		legnum = 1;
+		legnum = 1; //!1 testttt
 		tv_currentLeg.setText(getApplicationContext().getString(R.string.current_leg)
 				+ String.valueOf(legnum));
 		context = getApplicationContext();
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	protected void showRule() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
@@ -74,6 +79,7 @@ public class BigRoundActivity extends GameActivity {
 				.show();
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		gameMode = gamemode;
 		MenuInflater inflater = getMenuInflater();

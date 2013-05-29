@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
 		bigRoung_btn = (Button)findViewById(R.id.biground);
 		
 		classic_train501_btn.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View arg0) {
 				Intent i = new Intent(MainActivity.this, ClassicTrain501Activity.class);
 				startActivity(i);
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
 		});
 		
 		bigRoung_btn.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this, BigRoundActivity.class);
 				startActivity(i);

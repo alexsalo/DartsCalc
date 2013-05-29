@@ -1,56 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000" >
+    android:background="#000000"
+    android:orientation="vertical" >
 
     <TableLayout
         android:id="@+id/table_keyboard"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="0.5dp"
         android:layout_marginTop="0.5dp"
         android:background="#000000"
-        android:shrinkColumns="*"
-        android:stretchColumns="*" >
+        android:stretchColumns="1" >
+
+        <TableRow
+            android:id="@+id/tableRowScores"
+            android:layout_marginLeft="0.5dp"
+            android:layout_marginRight="0.5dp" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:orientation="vertical" 
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/current_attempt_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv00"
+                    android:textColor="#ffffff"
+                    android:textSize="50sp" />
+
+                <TextView
+                    android:id="@+id/current_leg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_leg"
+                    android:textColor="#bbbbbb" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp" >
+
+                <TextView
+                    android:id="@+id/current_leg1_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv00"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/current_leg2_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv00"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/current_leg3_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv00"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/current_score_layout"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#222222"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp" >
+
+                <TextView
+                    android:id="@+id/current_score_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv501"
+                    android:textColor="#ffffff"
+                    android:textSize="50sp" />
+
+                <TextView
+                    android:id="@+id/tv_remaining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_remaining"
+                    android:textColor="#bbbbbb" />
+            </LinearLayout>
+        </TableRow>
 
         <TableRow
             android:id="@+id/tableRow123"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
             android:layout_marginRight="0.5dp" >
 
             <TextView
                 android:id="@+id/tv1"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb1"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tv2"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb2"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tv3"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb3"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
@@ -58,40 +153,41 @@
 
         <TableRow
             android:id="@+id/tableRow456"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
             android:layout_marginRight="0.5dp" >
 
             <TextView
                 android:id="@+id/tv4"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb4"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tv5"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb5"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tv6"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb6"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
@@ -99,40 +195,41 @@
 
         <TableRow
             android:id="@+id/tableRow789"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
             android:layout_marginRight="0.5dp" >
 
             <TextView
                 android:id="@+id/tv7"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb7"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tv8"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb8"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tv9"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb9"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
@@ -140,136 +237,53 @@
 
         <TableRow
             android:id="@+id/tableRowc0confirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
             android:layout_marginRight="0.5dp" >
 
-            <TextView
+            <ImageView
                 android:id="@+id/tv_confirm"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
-                android:drawableLeft="@android:drawable/ic_menu_add"
-                android:gravity="center"
-                android:paddingBottom="25dp"
-                android:paddingLeft="35dp"
-                android:paddingTop="25dp"
-                android:textSize="30sp" />
+                android:contentDescription="@string/tb_confirm"
+                android:scaleType="center"
+                android:src="@android:drawable/ic_menu_add" />
 
             <TextView
                 android:id="@+id/tv0"
+                android:layout_width="0dp"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
                 android:gravity="center"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:text="@string/tb0"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/tv_erase"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="#222222"
-                android:drawableLeft="@android:drawable/ic_menu_edit"
-                android:gravity="center"
-                android:paddingBottom="25dp"
-                android:paddingLeft="35dp"
-                android:paddingTop="25dp"
-                android:textSize="30sp" />
+                android:contentDescription="@string/tb_erase"
+                android:scaleType="center"
+                android:src="@android:drawable/ic_menu_edit" />
         </TableRow>
     </TableLayout>
 
-    <LinearLayout
-        android:id="@+id/score_layout"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/table_keyboard"
-        android:background="#222222" >
+    <com.google.ads.AdView
+        android:id="@+id/adView_game"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="a151a4b6f761f67"
+        ads:loadAdOnCreate="true"
+        android:gravity="center_horizontal" >
+    </com.google.ads.AdView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="30dp"
-            	android:paddingTop="20dp" 
-                android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/current_attempt_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv00"
-                android:textColor="#ffffff"
-                android:textSize="50sp" />
-            <TextView 
-                android:id="@+id/current_leg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/current_leg"
-                android:textColor="#bbbbbb"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:padding="20dp" >
-
-            <TextView
-                android:id="@+id/current_leg1_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv00"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/current_leg2_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv00"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/current_leg3_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv00"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/current_score_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="right"
-            android:orientation="vertical"
-            android:paddingLeft="40dp"
-            android:paddingTop="20dp" >
-
-            <TextView
-                android:id="@+id/current_score_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv501"
-                android:textColor="#ffffff"
-                android:textSize="50sp" />
-
-            <TextView
-                android:id="@+id/tv_remaining"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_remaining"
-                android:textColor="#bbbbbb" />
-        </LinearLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

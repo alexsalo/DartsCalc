@@ -43,6 +43,29 @@
             </group>
         </menu>
     </item>
+    <item
+        android:id="@+id/sex"
+        android:background="#222222"
+        android:title="@string/menu_sex">
+
+        <!-- hand mode submenu -->
+
+        <menu>
+
+            <group android:checkableBehavior="single" >
+
+                <item
+                    android:id="@+id/menu_sex_female"
+                    android:title="@string/menu_sex_female"
+                    />
+
+                <item
+                    android:id="@+id/menu_sex_male"
+                    android:title="@string/menu_sex_male"
+                    android:checked = "true"/>
+            </group>
+        </menu>
+    </item>
     
     <item
         android:id="@+id/dropbox_link"
