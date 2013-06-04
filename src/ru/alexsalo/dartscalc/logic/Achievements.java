@@ -14,16 +14,19 @@ public class Achievements {
 	}
 
 	public String getAchievement(boolean male, GameModes gameMode, int score) {
-		int i=0;
-		int[] scoretable = table.get(gameMode);
-		if (male)
-			for (i = 0; i <= 16; i += 2) 
-				if (score < scoretable[i])
-					break;			
-		else 
-			for (i = 1; i <= 16; i += 2) 
-				if (score < scoretable[i])
-					break;
-		return male ? badges[(i / 2)-1] : badges[(i / 2)];
+		if (table.containsKey(gameMode)) {
+			int i = 0;
+			int[] scoretable = table.get(gameMode);
+			if (male)
+				for (i = 0; i <= 16; i += 2)
+					if (score < scoretable[i])
+						break;
+					else
+						for (i = 1; i <= 16; i += 2)
+							if (score < scoretable[i])
+								break;
+			return male ? badges[(i / 2) - 1] : badges[(i / 2)];
+		}
+		else return "Недоступно";
 	}
 }

@@ -30,27 +30,35 @@
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/getscores"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            android:text="@string/getscores"
-            android:textColor="#ffffff" />
-
-        <Button
-            android:id="@+id/sector20"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            android:text="@string/sector20"
-            android:textColor="#ffffff" />
-
-        <Button
             android:id="@+id/americancriket"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
             android:text="@string/americancriket"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/fast_round"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:text="@string/fast_round"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/train_301"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:text="@string/train_301"
+            android:textColor="#ffffff" />
+        
+        <Button
+            android:id="@+id/train_170"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:text="@string/train_170"
             android:textColor="#ffffff" />
     </LinearLayout>
 
@@ -61,19 +69,19 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/stats"
+            android:id="@+id/user_guide"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
-            android:text="@string/stats"
+            android:text="@string/user_guide"
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/sync"
+            android:id="@+id/settings_buttuon"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
-            android:text="@string/sync"
+            android:text="@string/settings_button"
             android:textColor="#ffffff" />
 
         <com.google.ads.AdView

@@ -36,10 +36,10 @@ public class xmlDataBuilder {
 					+ String.valueOf(mas.get(i)[7]) + "\r\n");
 		time.setToNow();
 		String filename = "training_" + time.format("%Y%m%d_%H%M%S") + ".csv";
-		String baseDir = Environment.getExternalStorageDirectory()
-				.getAbsolutePath();
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
+			String baseDir = Environment.getExternalStorageDirectory()
+					.getAbsolutePath();
 			localResultPath = game_mode.getGameMode();
 			DartsCalcData = new File(baseDir + File.separator + "DartsCalcData"
 					+ File.separator + game_mode.getGameMode());

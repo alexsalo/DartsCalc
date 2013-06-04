@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.dropbox.sync.android.DbxAccountManager;
-import com.dropbox.sync.android.DbxException;
 import com.dropbox.sync.android.DbxFile;
 import com.dropbox.sync.android.DbxFileSystem;
-import com.dropbox.sync.android.DbxFileSystem.PathListener;
 import com.dropbox.sync.android.DbxPath;
 
 import ru.alexsalo.dartscalc.R;
@@ -16,16 +14,18 @@ import ru.alexsalo.dartscalc.listners.EraseListener;
 import ru.alexsalo.dartscalc.listners.NumberListner;
 import ru.alexsalo.dartscalc.logic.Achievements;
 import ru.alexsalo.dartscalc.logic.GameModes;
+import ru.alexsalo.dartscalc.logic.LegsStatsGetter;
+import ru.alexsalo.dartscalc.logic.OutChart501;
 import ru.alexsalo.dartscalc.logic.SimpleMath;
 import ru.alexsalo.dartscalc.logic.xmlDataBuilder;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -58,13 +58,14 @@ public abstract class GameActivity extends Activity {
 	protected int sum;
 	protected GameModes gameMode;
 	protected ArrayList<int[]> score_data = new ArrayList<int[]>();
-	//protected View.OnTouchListener number_listner;
+	// protected View.OnTouchListener number_listner;
 	protected NumberListner number_listner;
 	protected Context context;
 	protected Achievements achievement;
 	protected SimpleMath math;
 	protected DbxAccountManager mDbxAcctMgr;
 	protected String syncDir;
+	protected OutChart501 out_chart501;
 
 	final public String APP_KEY = "ackpz991o5f69y9";
 	final public String APP_SECRET = "74mzwfyknxvwf3g";
@@ -105,11 +106,7 @@ public abstract class GameActivity extends Activity {
 			sex = true;
 			return true;
 		case R.id.menu_save_to_disk:
-			xmlDataBuilder xmlsaver = new xmlDataBuilder(gameMode);
-			Toast.makeText(getApplicationContext(), "Data has been saved",
-					Toast.LENGTH_LONG).show();
-			File file = xmlsaver.saveToXml(score_data);
-			saveResultToDb(file, xmlsaver.getLocalResultPath());
+			saveGameResults();
 			return true;
 		case R.id.dropbox_link:
 			onClickLinkToDropBox();
@@ -152,13 +149,26 @@ public abstract class GameActivity extends Activity {
 		tv_numbers_mas[9] = (TextView) findViewById(R.id.tv9);
 
 		ImageView tv_erase = (ImageView) findViewById(R.id.tv_erase);
-		tv_erase.setOnTouchListener(new EraseListener(current_attempt, dummy_zero));
+		tv_erase.setOnTouchListener(new EraseListener(current_attempt,
+				dummy_zero));
 
 		tv_confirm = (ImageView) findViewById(R.id.tv_confirm);
 		setConfirmTouchListner();
 
+		out_chart501 = new OutChart501(getApplicationContext().getString(
+				R.string.out_chart_501));
+
+		SharedPreferences login_pref = getSharedPreferences("login_sp", 0);
+		String login_name = login_pref.getString("login_name", "username");
+		String login_cell = login_pref.getString("login_cell", "12345");
+		syncDir = login_name + "_" + login_cell + "_" + android.os.Build.MODEL
+				+ "_" + android.os.Build.MANUFACTURER;
+
+		moreOnCreate();
 		initNewGame();
 	}
+
+	protected abstract void moreOnCreate();
 
 	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 		@Override
@@ -171,18 +181,6 @@ public abstract class GameActivity extends Activity {
 			case DialogInterface.BUTTON_NEGATIVE:
 				// No button clicked
 				break;
-			}
-		}
-	};
-
-	DbxFileSystem.PathListener mDbxPathListner = new PathListener() {
-		@Override
-		public void onPathChange(DbxFileSystem fs, DbxPath arg1, Mode arg2) {
-			try {
-				fs.syncNowAndWait();
-			} catch (DbxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	};
@@ -216,12 +214,9 @@ public abstract class GameActivity extends Activity {
 		}
 	}
 
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	protected void saveResultToDb(File f, String path) {
 		if (mDbxAcctMgr.hasLinkedAccount()) {
-			syncDir = android.os.Build.MODEL + "_"
-					+ android.os.Build.MANUFACTURER + "_"
-					+ android.os.Build.SERIAL + "_" + File.separator + path;
+			syncDir += File.separator + path;
 			DbxFile dfile;
 			try {
 				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr
@@ -232,7 +227,8 @@ public abstract class GameActivity extends Activity {
 				dfile.writeFromExistingFile(f, false);
 				dfile.close();
 			} catch (IOException e) {
-			};
+			}
+			;
 		}
 	}
 
@@ -276,7 +272,14 @@ public abstract class GameActivity extends Activity {
 		mas[7] = sex ? 1 : 0;
 		score_data.add(mas);
 		leg = 1;
+		erase_score_leg_results();
 		initLegViews();
+	}
+
+	protected void erase_score_leg_results() {
+		score_leg1 = 0;
+		score_leg2 = 0;
+		score_leg3 = 0;
 	}
 
 	abstract void showRule();
@@ -297,6 +300,47 @@ public abstract class GameActivity extends Activity {
 				}
 			});
 		}
+	}
+
+	DialogInterface.OnClickListener winDialogClickListener = new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			saveGameResults();
+
+			switch (which) {
+			case DialogInterface.BUTTON_POSITIVE:
+				initNewGame();
+				break;
+
+			case DialogInterface.BUTTON_NEGATIVE:
+				break;
+			}
+		}
+	};
+
+	protected void showWinnerResults(int dartnum, GameModes gamemode) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+		LegsStatsGetter mLSG = new LegsStatsGetter();
+		String s = achievement.getAchievement(sex, gamemode, score_game);
+		builder.setMessage(
+				"Победа!\n" + "Вы выполнили норматив на: " + s + "\n"
+						+ "Затрачено " + dartnum
+						+ " бросков\n статистика очков:\n"
+						+ mLSG.getStats(score_data) + "Что дальше?")
+				.setPositiveButton("Еще раз", winDialogClickListener)
+				.setNegativeButton("Хватит", winDialogClickListener).show();
+	}
+
+	private void saveGameResults() {
+		int tmp[] = math.mean(score_data); // get mean
+		score_data.add(tmp);
+
+		xmlDataBuilder xmlsaver = new xmlDataBuilder(gameMode);
+		Toast.makeText(getApplicationContext(), "Данные сохранены",
+				Toast.LENGTH_LONG).show();
+		File file = xmlsaver.saveToXml(score_data);
+		saveResultToDb(file, xmlsaver.getLocalResultPath());
 	}
 
 }
