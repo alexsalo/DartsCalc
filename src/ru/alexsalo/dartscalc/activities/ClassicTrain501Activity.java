@@ -122,6 +122,18 @@ public class ClassicTrain501Activity extends GameActivity {
 		Bundle b = getIntent().getExtras();
 		m_game_init_score = b.getInt("init_score", 501);
 		gamemode = (GameModes) getIntent().getSerializableExtra("gamemode");
+		switch (gamemode){
+		case CLASSIC_501:
+			this.setTitle(R.string.train_classic);
+			break;
+		case CLASSIC_301:
+			this.setTitle(R.string.train_301);
+			break;
+		case CLASSIC_170:
+			this.setTitle(R.string.train_170);
+			break;
+		}
+		this.setTitle(this.getTitle()+" "+ login_name);
 		setGameScoreOutChartListner();
 		fillValidScores();
 		fillValidDScores();

@@ -18,7 +18,7 @@ public class NumberListner implements OnTouchListener{
 		public boolean onTouch(View v, MotionEvent event) {
 			CharSequence text = mtv.getText();
 			int n = (Integer) v.getTag();
-			if (text.equals(mdummy_zero))
+			if (text.equals(mdummy_zero) || text.equals("0"))
 				if (n!=0)
 					mtv.setText("0" + String.valueOf(n));
 				else 

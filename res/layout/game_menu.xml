@@ -8,12 +8,18 @@
         android:icon="@android:drawable/ic_menu_help"
         android:showAsAction="ifRoom"
         android:title="@string/menu_rule"/>
-
+    
     <item
+        android:id="@+id/menu_giveup"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_giveup"/>
+
+    <!-- <item
         android:id="@+id/menu_save_to_disk"
         android:icon="@android:drawable/ic_menu_save"
         android:showAsAction="ifRoom"
-        android:title="@string/menu_rule"/>
+        android:title="@string/menu_rule"/> -->
 
     <item
         android:id="@+id/menu_newgame"

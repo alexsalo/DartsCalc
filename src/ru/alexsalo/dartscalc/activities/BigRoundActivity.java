@@ -19,30 +19,35 @@ public class BigRoundActivity extends GameActivity {
 		tv_confirm.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				cur_score = Integer.parseInt(current_attempt.getText()
-						.toString());
-				if (legnum <= 20)
-					if ((cur_score % legnum == 0 && cur_score <= legnum * 3)
-							|| cur_score == 0) {
-						ShowLegViewScores();
-						if (leg == 4)// 3 leg's attempts ready
-							legOver();
-					}
-				if (legnum == 21) // bull
-					if (cur_score == 25 || cur_score == 50 || cur_score == 0) {
-						ShowLegViewScores();
-						if (leg == 4) {
-							sum = score_leg1 + score_leg2 + score_leg3;
-							score_game += sum;
-							writeLegResults();
-							current_score_game.setText(String
-									.valueOf(score_game));
-							setDummyNumberListner(); // end of game, hold screen
-							showWinnerResults(legnum * 3, GameModes.BIG_ROUND);
+				if (current_attempt.getText().toString() != dummy_zero) {
+					cur_score = Integer.parseInt(current_attempt.getText()
+							.toString());
+					if (legnum == 21) // bull
+						if (cur_score == 25 || cur_score == 50
+								|| cur_score == 0) {
+							ShowLegViewScores();
+							if (leg == 4) {
+								sum = score_leg1 + score_leg2 + score_leg3;
+								score_game += sum;
+								writeLegResults();
+								current_score_game.setText(String
+										.valueOf(score_game));
+								setDummyNumberListner(); // end of game, hold
+															// screen
+								showWinnerResults(legnum * 3,
+										GameModes.BIG_ROUND);
+							}
+							current_attempt.setText(dummy_zero);
 						}
-					}
-
-				current_attempt.setText(dummy_zero);
+					if (legnum <= 20)
+						if ((cur_score % legnum == 0 && cur_score <= legnum * 3)
+								|| cur_score == 0) {
+							ShowLegViewScores();
+							if (leg == 4)// 3 leg's attempts ready
+								legOver();
+							current_attempt.setText(dummy_zero);
+						}
+				}
 				return false;
 			}
 		});
@@ -96,7 +101,7 @@ public class BigRoundActivity extends GameActivity {
 	@Override
 	protected void moreOnCreate() {
 		// TODO Auto-generated method stub
-
+		this.setTitle(this.getTitle()+" "+ login_name);
 	}
 
 }

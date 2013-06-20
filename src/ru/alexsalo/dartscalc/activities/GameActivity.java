@@ -66,6 +66,9 @@ public abstract class GameActivity extends Activity {
 	protected DbxAccountManager mDbxAcctMgr;
 	protected String syncDir;
 	protected OutChart501 out_chart501;
+	
+	protected String login_name; 
+	protected String login_cell;
 
 	final public String APP_KEY = "ackpz991o5f69y9";
 	final public String APP_SECRET = "74mzwfyknxvwf3g";
@@ -83,6 +86,11 @@ public abstract class GameActivity extends Activity {
 			showRule();
 			return true;
 		case R.id.menu_newgame:
+			initNewGame();
+			return true;
+		case R.id.menu_giveup:
+			if (!score_data.isEmpty())
+				saveGameResults("Сдался");
 			initNewGame();
 			return true;
 		case R.id.menu_left_hand:
@@ -105,9 +113,9 @@ public abstract class GameActivity extends Activity {
 				item.setChecked(true);
 			sex = true;
 			return true;
-		case R.id.menu_save_to_disk:
+		/*case R.id.menu_save_to_disk:
 			saveGameResults();
-			return true;
+			return true;*/
 		case R.id.dropbox_link:
 			onClickLinkToDropBox();
 			return true;
@@ -115,6 +123,7 @@ public abstract class GameActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -159,8 +168,8 @@ public abstract class GameActivity extends Activity {
 				R.string.out_chart_501));
 
 		SharedPreferences login_pref = getSharedPreferences("login_sp", 0);
-		String login_name = login_pref.getString("login_name", "username");
-		String login_cell = login_pref.getString("login_cell", "12345");
+		login_name = login_pref.getString("login_name", "username");
+		login_cell = login_pref.getString("login_cell", "12345");
 		syncDir = login_name + "_" + login_cell + "_" + android.os.Build.MODEL
 				+ "_" + android.os.Build.MANUFACTURER;
 
@@ -214,15 +223,15 @@ public abstract class GameActivity extends Activity {
 		}
 	}
 
-	protected void saveResultToDb(File f, String path) {
+	protected void saveResultToDb(File f) {
 		if (mDbxAcctMgr.hasLinkedAccount()) {
-			syncDir += File.separator + path;
+			String syncPath =syncDir + File.separator + gameMode.getGameMode();
 			DbxFile dfile;
 			try {
 				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr
 						.getLinkedAccount());
-				dbxFs.createFolder(new DbxPath(syncDir));
-				dfile = dbxFs.create(new DbxPath(syncDir + File.separator
+				dbxFs.createFolder(new DbxPath(syncPath));
+				dfile = dbxFs.create(new DbxPath(syncPath + File.separator
 						+ f.getName()));
 				dfile.writeFromExistingFile(f, false);
 				dfile.close();
@@ -305,7 +314,7 @@ public abstract class GameActivity extends Activity {
 	DialogInterface.OnClickListener winDialogClickListener = new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			saveGameResults();
+			saveGameResults(null);
 
 			switch (which) {
 			case DialogInterface.BUTTON_POSITIVE:
@@ -332,15 +341,15 @@ public abstract class GameActivity extends Activity {
 				.setNegativeButton("Хватит", winDialogClickListener).show();
 	}
 
-	private void saveGameResults() {
+	private void saveGameResults(String note) {
 		int tmp[] = math.mean(score_data); // get mean
 		score_data.add(tmp);
 
 		xmlDataBuilder xmlsaver = new xmlDataBuilder(gameMode);
 		Toast.makeText(getApplicationContext(), "Данные сохранены",
 				Toast.LENGTH_LONG).show();
-		File file = xmlsaver.saveToXml(score_data);
-		saveResultToDb(file, xmlsaver.getLocalResultPath());
+		File file = xmlsaver.saveToXml(score_data, note);
+		saveResultToDb(file);
 	}
 
 }
